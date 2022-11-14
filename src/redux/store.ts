@@ -1,12 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { postList } from "../services/PostListService";
+import articlesApi from "./../services/articleApi";
+import authApi from "./../services/authApi";
+import authSlice from "./authSlice";
 
 export const store = configureStore({
   reducer: {
-    [postList.reducerPath]: postList.reducer,
+    user: authSlice,
+    [articlesApi.reducerPath]: articlesApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(postList.middleware),
+  middleware: (getDM) => getDM().concat(articlesApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
