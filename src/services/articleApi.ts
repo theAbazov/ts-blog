@@ -7,7 +7,7 @@ interface Author {
   bio?: string;
 }
 
-interface Article {
+export interface Article {
   slug: string;
   title: string;
   description: string;
@@ -40,20 +40,39 @@ interface CreatePost {
   token: string;
 }
 
+interface GetPosts {
+  limit?: number;
+  page?: number;
+  token?: string;
+  slug?: string;
+}
+
 const articlesApi = createApi({
   reducerPath: "articles",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://blog.kata.academy/api/articles",
   }),
   endpoints: (build) => ({
-    getPostDetail: build.query<PostDetail, string>({
-      query: (slug: string) => ({
+    getPostDetail: build.query<PostDetail, GetPosts>({
+      query: ({ slug, token }) => ({
         url: `/${slug}`,
+        headers: {
+          Authoriation: `Bearer ${token}`,
+        },
       }),
     }),
 
-    getPostList: build.query<PostList, number>({
-      query: (limit: number) => ({ url: "/", limit }),
+    getPostList: build.query<PostList, GetPosts>({
+      query: ({ limit = 5, page = 1, token }) => ({
+        url: "/",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          limit,
+          offset: (page - 1) * limit,
+        },
+      }),
     }),
 
     createPost: build.mutation<PostDetail, CreatePost>({
@@ -122,5 +141,5 @@ export const {
   useUnFavoriteMutation,
   // Gettin posts
   useGetPostListQuery,
-  useLazyGetPostDetailQuery,
+  useGetPostDetailQuery,
 } = articlesApi;

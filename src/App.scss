@@ -1,3 +1,7 @@
+@import "./vars.scss";
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
 *,
 *::after,
 *::before {
@@ -8,4 +12,26 @@
 
 html {
   box-sizing: border-box;
+}
+body {
+  background: $bg-color;
+  font-family: Inter, sans-serif;
+}
+
+// Pagination
+
+.css-wjh20t-MuiPagination-ul {
+  display: flex;
+  justify-content: center;
+  margin: 27px 0 18px !important ;
+}
+
+.css-10w330c-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+  background-color: $info-color !important;
+  color: $base-color;
+}
+
+a {
+  text-decoration: none;
+  color: $info-color;
 }

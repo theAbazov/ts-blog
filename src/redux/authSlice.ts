@@ -5,12 +5,14 @@ interface IState {
   name: string | null;
   image: string | null;
   token: string | null;
+  isAuth: boolean;
 }
 
 const initialState: IState = {
   name: null,
   image: null,
   token: null,
+  isAuth: false,
 };
 
 const authSlice = createSlice({
