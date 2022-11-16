@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import "./PostDetail.scss";
 import { useParams } from "react-router-dom";
 import { Article, useGetPostDetailQuery } from "../../services";
