@@ -18,15 +18,15 @@ body {
 
 // Pagination
 
-.css-wjh20t-MuiPagination-ul {
+.MuiPagination-ul {
   display: flex;
   justify-content: center;
   margin: 27px 0 18px !important ;
 }
 
-.css-10w330c-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+.Mui-selected {
   background-color: $info-color !important;
-  color: $base-color;
+  color: $base-color !important;
 }
 
 a {
