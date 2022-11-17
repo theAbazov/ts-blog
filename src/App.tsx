@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from "./hooks";
 import { setUser } from "./redux";
 import { toast } from "react-toastify";
 import { Edit } from "./components/Edit";
+import { Create } from "./components/Create";
 
 const App: FC = () => {
   const [getUser, { data, error, isSuccess, isError }] = useLazyGetUserQuery();
@@ -45,6 +46,7 @@ const App: FC = () => {
         <Route path="signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/edit" element={<Edit />} />
+        <Route path="/new-post" element={<Create />} />
       </Routes>
     </div>
   );

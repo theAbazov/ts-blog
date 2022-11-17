@@ -1,11 +1,17 @@
 import React, { FC } from "react";
 import format from "date-fns/format";
-import { Article } from "../../../services";
+import {
+  Article,
+  useFovoriteMutation,
+  useUnFavoriteMutation,
+} from "../../../services";
 import { NavLink } from "react-router-dom";
 import { v4 } from "uuid";
 import "./Post.scss";
 
 export const Post: FC<{ article: Article }> = ({ article }) => {
+  const [like] = useFovoriteMutation();
+  const [unlike] = useUnFavoriteMutation();
   const {
     title,
     favorited,
@@ -17,6 +23,14 @@ export const Post: FC<{ article: Article }> = ({ article }) => {
     slug,
   } = article;
 
+  const handleLike = () => {
+    if (favorited) {
+      unlike(slug);
+    } else {
+      like(slug);
+    }
+  };
+
   return (
     <div className="postlist__post post">
       <div className="post-wrapper">
@@ -27,6 +41,7 @@ export const Post: FC<{ article: Article }> = ({ article }) => {
             </div>
             <div className="post__like">
               <div
+                onClick={() => handleLike()}
                 className={
                   favorited ? "post__like-icon liked" : "post__like-icon"
                 }

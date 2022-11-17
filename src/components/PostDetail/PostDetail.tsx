@@ -1,10 +1,18 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import "./PostDetail.scss";
 import { useParams } from "react-router-dom";
-import { Article, useGetPostDetailQuery } from "../../services";
+import {
+  Article,
+  useFovoriteMutation,
+  useGetPostDetailQuery,
+  useUnFavoriteMutation,
+} from "../../services";
 import { format } from "date-fns";
 
 const PostDetailUI: FC<{ article: Article }> = ({ article }) => {
+  const [like] = useFovoriteMutation();
+  const [unlike] = useUnFavoriteMutation();
+
   const {
     title,
     favorited,
@@ -13,7 +21,17 @@ const PostDetailUI: FC<{ article: Article }> = ({ article }) => {
     tagList,
     description,
     createdAt,
+    slug,
   } = article;
+
+  const handleLike = () => {
+    if (favorited) {
+      unlike(slug);
+    } else {
+      like(slug);
+    }
+  };
+
   return (
     <div className="postdetail">
       <div className="post">
@@ -25,6 +43,7 @@ const PostDetailUI: FC<{ article: Article }> = ({ article }) => {
               </div>
               <div className="post__like">
                 <div
+                  onClick={() => handleLike()}
                   className={
                     favorited ? "post__like-icon liked" : "post__like-icon"
                   }

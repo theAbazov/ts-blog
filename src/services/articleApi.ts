@@ -51,6 +51,7 @@ const articlesApi = baseApi.injectEndpoints({
       query: (slug) => ({
         url: `/articles/${slug}`,
       }),
+      providesTags: ["Detail"],
     }),
 
     getPostList: build.query<PostList, GetPosts>({
@@ -61,27 +62,33 @@ const articlesApi = baseApi.injectEndpoints({
           offset: (page - 1) * limit,
         },
       }),
+      providesTags: (res) =>
+        res?.articles
+          ? [
+              ...res.articles.map(({ slug }) => ({
+                type: "Posts" as const,
+                id: slug,
+              })),
+              { type: "Posts", id: "LIST" },
+            ]
+          : [{ type: "Posts", id: "LIST" }],
     }),
 
     createPost: build.mutation<PostDetail, CreatePost>({
       query: ({ body, token }) => ({
         url: "/articles/",
         method: "post",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
         body,
       }),
+      invalidatesTags: [{ type: "Posts", id: "LIST" }],
     }),
 
     deletePost: build.mutation({
       query: ({ slug, token }) => ({
         url: `/articles/${slug}`,
         method: "delete",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }),
+      invalidatesTags: [{ type: "Posts", id: "LIST" }],
     }),
 
     updatePost: build.mutation<PostDetail, UpdatePost>({
@@ -90,6 +97,7 @@ const articlesApi = baseApi.injectEndpoints({
         method: "put",
         body,
       }),
+      invalidatesTags: [{ type: "Posts", id: "LIST" }],
     }),
 
     fovorite: build.mutation<PostDetail, string>({
@@ -97,6 +105,7 @@ const articlesApi = baseApi.injectEndpoints({
         url: `/articles/${slug}/favorite`,
         method: "post",
       }),
+      invalidatesTags: [{ type: "Posts", id: "LIST" }, "Detail"],
     }),
 
     unFavorite: build.mutation<PostDetail, string>({
@@ -104,6 +113,7 @@ const articlesApi = baseApi.injectEndpoints({
         url: `/articles/${slug}/favorite`,
         method: "delete",
       }),
+      invalidatesTags: [{ type: "Posts", id: "LIST" }, "Detail"],
     }),
   }),
 });

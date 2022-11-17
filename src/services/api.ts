@@ -3,6 +3,7 @@ import { RootState } from "../redux";
 
 export const baseApi = createApi({
   reducerPath: "api",
+  tagTypes: ["Posts", "Detail"],
   baseQuery: fetchBaseQuery({
     baseUrl: "https://blog.kata.academy/api/",
     prepareHeaders: (headers, { getState }) => {

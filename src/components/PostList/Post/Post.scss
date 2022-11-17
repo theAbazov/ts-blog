@@ -51,9 +51,6 @@
       background-image: url(../../../assets/img/like.svg);
       cursor: pointer;
     }
-    .liked {
-      background-image: url(../../../assets/img/like-red.svg);
-    }
   }
 
   &__tags {
@@ -96,4 +93,8 @@
       }
     }
   }
+}
+
+.liked {
+  background-image: url(../../../assets/img/like-red.svg);
 }
