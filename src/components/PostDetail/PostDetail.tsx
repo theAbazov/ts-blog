@@ -61,12 +61,7 @@ const PostDetailUI: FC<{ article: Article }> = ({ article }) => {
 
 export const PostDetail: FC = () => {
   const { slug } = useParams();
-  const token = localStorage.getItem("token") || undefined;
-  console.log(slug);
-  const { data, isSuccess } = useGetPostDetailQuery({
-    slug,
-    token,
-  });
+  const { data, isSuccess } = useGetPostDetailQuery(slug);
 
   if (isSuccess) return <PostDetailUI article={data.article} />;
   return <p style={{ textAlign: "center" }}>Loading...</p>;

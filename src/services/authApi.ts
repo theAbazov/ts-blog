@@ -1,15 +1,19 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { RootState } from "../redux";
+import { baseApi } from "./api";
 
 interface RegisterRequest {
-  name: string;
-  email: string;
-  password: string;
+  user: {
+    username: string;
+    email: string;
+    password: string;
+  };
 }
 
 interface User {
   email: string;
-  token?: string;
-  password?: string;
+  token: string;
+  password: string;
   username: string;
   bio: string;
   image: string;
@@ -18,47 +22,31 @@ interface UserResponse {
   user: User;
 }
 
-interface UpdateUser {
-  body: UserResponse;
-  token: string;
-}
-
-interface UserLoginReq {
-  email: string;
-  password: string;
-}
-
-const authApi = createApi({
-  reducerPath: "auth",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://blog.kata.academy/api/" }),
+const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    login: build.mutation<UserResponse, UserLoginReq>({
-      query: (body: UserLoginReq) => ({
+    login: build.mutation<UserResponse, { user: Partial<User> }>({
+      query: (body) => ({
         url: "/users/login",
         method: "post",
         body,
       }),
     }),
-    register: build.mutation<UserResponse, RegisterRequest>({
+    register: build.mutation<UserResponse, { user: Partial<User> }>({
       query: (body: RegisterRequest) => ({
         url: "/users",
         method: "post",
         body,
       }),
     }),
-    getUser: build.query<UserResponse, string>({
-      query: (token) => ({
+    getUser: build.query<UserResponse, undefined>({
+      query: () => ({
         url: "/user",
-        Headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }),
     }),
-    updateUser: build.mutation<UserResponse, UpdateUser>({
-      query: ({ body, token }) => ({
+    updateUser: build.mutation<UserResponse, { user: Partial<User> }>({
+      query: (body) => ({
         url: "/user",
         method: "PUT",
-        headers: { Authorization: `Bearer ${token}` },
         body,
       }),
     }),
@@ -68,7 +56,7 @@ const authApi = createApi({
 export default authApi;
 
 export const {
-  useGetUserQuery,
+  useLazyGetUserQuery,
   useLoginMutation,
   useRegisterMutation,
   useUpdateUserMutation,

@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { baseApi } from "./api";
 
 interface Author {
   username: string;
@@ -31,7 +31,6 @@ interface PostDetail {
 
 interface UpdatePost {
   slug: string;
-  token: string;
   body: Partial<PostDetail>;
 }
 
@@ -43,31 +42,20 @@ interface CreatePost {
 interface GetPosts {
   limit?: number;
   page?: number;
-  token?: string;
   slug?: string;
 }
 
-const articlesApi = createApi({
-  reducerPath: "articles",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "https://blog.kata.academy/api/articles",
-  }),
+const articlesApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getPostDetail: build.query<PostDetail, GetPosts>({
-      query: ({ slug, token }) => ({
-        url: `/${slug}`,
-        headers: {
-          Authoriation: `Bearer ${token}`,
-        },
+    getPostDetail: build.query<PostDetail, string | undefined>({
+      query: (slug) => ({
+        url: `/articles/${slug}`,
       }),
     }),
 
     getPostList: build.query<PostList, GetPosts>({
-      query: ({ limit = 5, page = 1, token }) => ({
-        url: "/",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      query: ({ limit = 5, page = 1 }) => ({
+        url: "/articles/",
         params: {
           limit,
           offset: (page - 1) * limit,
@@ -77,7 +65,7 @@ const articlesApi = createApi({
 
     createPost: build.mutation<PostDetail, CreatePost>({
       query: ({ body, token }) => ({
-        url: "/",
+        url: "/articles/",
         method: "post",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -88,7 +76,7 @@ const articlesApi = createApi({
 
     deletePost: build.mutation({
       query: ({ slug, token }) => ({
-        url: `/${slug}`,
+        url: `/articles/${slug}`,
         method: "delete",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -97,33 +85,24 @@ const articlesApi = createApi({
     }),
 
     updatePost: build.mutation<PostDetail, UpdatePost>({
-      query: ({ slug, token, body }) => ({
-        url: `/${slug}`,
+      query: ({ slug, body }) => ({
+        url: `/articles/${slug}`,
         method: "put",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
         body,
       }),
     }),
 
-    fovorite: build.mutation<PostDetail, { slug: string; token: string }>({
-      query: ({ slug, token }) => ({
-        url: `/${slug}/favorite`,
+    fovorite: build.mutation<PostDetail, string>({
+      query: (slug) => ({
+        url: `/articles/${slug}/favorite`,
         method: "post",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }),
     }),
 
-    unFavorite: build.mutation<PostDetail, { slug: string; token: string }>({
-      query: ({ slug, token }) => ({
-        url: `/${slug}/favorite`,
+    unFavorite: build.mutation<PostDetail, string>({
+      query: (slug) => ({
+        url: `/articles/${slug}/favorite`,
         method: "delete",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }),
     }),
   }),
@@ -140,6 +119,6 @@ export const {
   useFovoriteMutation,
   useUnFavoriteMutation,
   // Gettin posts
-  useGetPostListQuery,
+  useLazyGetPostListQuery,
   useGetPostDetailQuery,
 } = articlesApi;

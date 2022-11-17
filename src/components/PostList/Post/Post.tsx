@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import format from "date-fns/format";
 import { Article } from "../../../services";
 import { NavLink } from "react-router-dom";
+import { v4 } from "uuid";
 import "./Post.scss";
 
 export const Post: FC<{ article: Article }> = ({ article }) => {
@@ -35,7 +36,7 @@ export const Post: FC<{ article: Article }> = ({ article }) => {
           </div>
           <div className="post__tags">
             {tagList.map((tag) => (
-              <span className="post__tags-tag" key={tag}>
+              <span className="post__tags-tag" key={v4()}>
                 {tag}
               </span>
             ))}

@@ -2,16 +2,18 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "./store";
 
 interface IState {
-  name: string | null;
-  image: string | null;
-  token: string | null;
+  username: string | undefined;
+  image: string | undefined;
+  token: string | undefined;
+  email: string | undefined;
   isAuth: boolean;
 }
 
 const initialState: IState = {
-  name: null,
-  image: null,
-  token: null,
+  username: undefined,
+  image: undefined,
+  token: undefined,
+  email: undefined,
   isAuth: false,
 };
 
@@ -19,20 +21,21 @@ const authSlice = createSlice({
   name: "authSlice",
   initialState,
   reducers: {
-    setUser: (
-      state,
-      action: PayloadAction<{ name: string; image: string; token: string }>
-    ) => {
-      localStorage.setItem("token", JSON.stringify(action.payload.token));
-      state.name = action.payload.name;
+    setUser: (state, action: PayloadAction<Partial<IState>>) => {
+      state.username = action.payload.username;
       state.token = action.payload.token;
       state.image = action.payload.image;
+      state.email = action.payload.email;
+      state.isAuth = action.payload.isAuth!;
+    },
+    logout: (state) => {
+      localStorage.clear();
+      state.isAuth = false;
+      state.token = undefined;
     },
   },
 });
 
 export default authSlice.reducer;
 
-export const selectAuth = (state: RootState) => state.auth;
-
-export const { setUser } = authSlice.actions;
+export const { setUser, logout } = authSlice.actions;

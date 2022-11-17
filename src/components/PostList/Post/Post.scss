@@ -27,7 +27,9 @@
     align-items: center;
 
     &-text {
-      color: $info-color;
+      a {
+        color: $info-color;
+      }
       cursor: pointer;
       &:hover {
         text-decoration: underline;
@@ -48,9 +50,9 @@
       background-size: cover;
       background-image: url(../../../assets/img/like.svg);
       cursor: pointer;
-      .liked {
-        background-image: url(../../../assets/img/like-red.svg);
-      }
+    }
+    .liked {
+      background-image: url(../../../assets/img/like-red.svg);
     }
   }
 
