@@ -30,13 +30,8 @@ interface PostDetail {
 }
 
 interface UpdatePost {
-  slug: string;
-  body: Partial<PostDetail>;
-}
-
-interface CreatePost {
-  body: Partial<Article>;
-  token: string;
+  slug?: string;
+  body: { article: Partial<Article> };
 }
 
 interface GetPosts {
@@ -74,8 +69,8 @@ const articlesApi = baseApi.injectEndpoints({
           : [{ type: "Posts", id: "LIST" }],
     }),
 
-    createPost: build.mutation<PostDetail, CreatePost>({
-      query: ({ body, token }) => ({
+    createPost: build.mutation<PostDetail, { article: Partial<Article> }>({
+      query: (body) => ({
         url: "/articles/",
         method: "post",
         body,
@@ -83,8 +78,8 @@ const articlesApi = baseApi.injectEndpoints({
       invalidatesTags: [{ type: "Posts", id: "LIST" }],
     }),
 
-    deletePost: build.mutation({
-      query: ({ slug, token }) => ({
+    deletePost: build.mutation<null, string>({
+      query: (slug: string) => ({
         url: `/articles/${slug}`,
         method: "delete",
       }),

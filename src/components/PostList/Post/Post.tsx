@@ -59,14 +59,16 @@ export const Post: FC<{ article: Article }> = ({ article }) => {
           <div className="post__desc">{description}</div>
         </div>
         <div className="post__author">
-          <div className="post__author-data">
-            <div className="post__author-name">{username}</div>
-            <div className="post__author-created">
-              {format(new Date(createdAt), "PP")}
+          <div className="post-wrapper">
+            <div className="post__author-data">
+              <div className="post__author-name">{username}</div>
+              <div className="post__author-created">
+                {format(new Date(createdAt), "PP")}
+              </div>
             </div>
-          </div>
-          <div className="post__author-avatar">
-            <img src={image} alt="" />
+            <div className="post__author-avatar">
+              <img src={image} alt="" />
+            </div>
           </div>
         </div>
       </div>

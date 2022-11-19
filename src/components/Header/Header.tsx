@@ -23,7 +23,9 @@ export const Auth: FC<{ onClick: () => any }> = ({ onClick }) => {
   const { username, image } = useAppSelector((state) => state.user);
   return (
     <div className="header__auth">
-      <div className="header__auth-create">Create article</div>
+      <NavLink to={"/new-post"} className="header__auth-create">
+        Create article
+      </NavLink>
       <div className="header__auth-user">
         <NavLink to={"/edit"} className="name">
           {username}

@@ -14,7 +14,7 @@ export const PostList: FC = () => {
 
   useEffect(() => {
     getPosts({ limit, page });
-  }, [isAuth, token]);
+  }, [isAuth, token, page, limit, getPosts]);
 
   if (isLoading) return <p style={{ textAlign: "center" }}>Loading...</p>;
   return (

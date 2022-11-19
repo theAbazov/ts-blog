@@ -8,6 +8,7 @@ interface InputTypes {
   errorMsg?: string;
   onChange: (e: any) => any;
   value: string;
+  height?: string;
 }
 
 export const Input: FC<InputTypes> = ({
@@ -17,19 +18,42 @@ export const Input: FC<InputTypes> = ({
   errorMsg,
   onChange,
   value,
+  height,
 }) => {
+  if (type !== "textarea") {
+    return (
+      <li className="form">
+        <label htmlFor={title} className="form__title">
+          {title}
+        </label>
+        <input
+          id={title}
+          className={isError ? "form__input error-border" : "form__input"}
+          style={{ height }}
+          type={type}
+          onChange={onChange}
+          value={value}
+          placeholder={title}
+        />
+        {isError && <div className="form__error">{errorMsg}</div>}
+      </li>
+    );
+  }
   return (
-    <label className="form">
-      <div className="form__title">{title}</div>
-      <input
+    <li className="form">
+      <label htmlFor={title} className="form__title">
+        {title}
+      </label>
+      <textarea
+        id={title}
         className={isError ? "form__input error-border" : "form__input"}
-        type={type}
+        style={{ height, resize: "none" }}
         onChange={onChange}
         value={value}
         placeholder={title}
       />
       {isError && <div className="form__error">{errorMsg}</div>}
-    </label>
+    </li>
   );
 };
 
@@ -37,4 +61,5 @@ Input.defaultProps = {
   type: "text",
   isError: false,
   errorMsg: "Не предвиденная ошибка",
+  height: "40px",
 };

@@ -30,6 +30,9 @@ const authSlice = createSlice({
     },
     logout: (state) => {
       localStorage.clear();
+      state.email = undefined;
+      state.username = undefined;
+      state.token = undefined;
       state.isAuth = false;
       state.token = undefined;
     },

@@ -1,0 +1,57 @@
+@import "../../vars.scss";
+.modal {
+  &::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 6.5px 6px 6.5px 0;
+    border-color: transparent #ffffff transparent transparent;
+    right: 100%;
+  }
+  position: absolute;
+  padding: 12px 17px;
+  top: -4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  left: calc(100% + 8px);
+  background: $base-color;
+  color: $modal-color;
+  width: 240px;
+  height: 104px;
+  display: flex;
+  border-radius: 4px;
+  flex-direction: column;
+  justify-content: space-between;
+  &__title {
+    display: flex;
+    p {
+      font-size: 14px;
+      text-align: left;
+    }
+  }
+
+  &__icon {
+    width: 18.5px;
+    height: 16px;
+    background: url("../../assets/img/warn.svg");
+    background-size: cover;
+    margin-right: 9px;
+  }
+  &__buttons {
+    display: flex;
+    align-self: flex-end;
+    column-gap: 8px;
+  }
+  &__btn {
+    font-size: 14px;
+    padding: 2px 8px;
+    border: 1px solid $modal-color;
+    border-radius: 3px;
+  }
+  .yes {
+    background: $info-color;
+    color: $base-color;
+    border-color: $info-color;
+  }
+}

@@ -18,3 +18,40 @@
     font-size: 18px;
   }
 }
+
+.btns {
+  display: flex;
+  justify-content: end;
+  margin-top: 20px;
+  .btn {
+    display: block;
+    background: transparent;
+    outline: none;
+    padding: 6px 17px;
+    border-radius: 5px;
+    cursor: pointer;
+    &__delete {
+      position: relative;
+      border: 1px solid $error-color;
+      color: $error-color;
+    }
+    &__edit {
+      margin-left: 12px;
+      border: 1px solid $success-color;
+      color: $success-color;
+    }
+  }
+}
+
+.modal {
+  position: relative;
+  top: 0;
+  right: 0;
+}
+
+.triangle {
+  display: inline-block;
+  border: 12px solid transparent;
+  border-right: 6px solid blue;
+  position: absolute;
+}

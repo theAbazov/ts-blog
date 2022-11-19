@@ -13,6 +13,7 @@ import { setUser } from "./redux";
 import { toast } from "react-toastify";
 import { Edit } from "./components/Edit";
 import { Create } from "./components/Create";
+import { EditPost } from "./components/EditPost";
 
 const App: FC = () => {
   const [getUser, { data, error, isSuccess, isError }] = useLazyGetUserQuery();
@@ -47,6 +48,7 @@ const App: FC = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/edit" element={<Edit />} />
         <Route path="/new-post" element={<Create />} />
+        <Route path="/post-edit/:slug/" element={<EditPost />} />
       </Routes>
     </div>
   );

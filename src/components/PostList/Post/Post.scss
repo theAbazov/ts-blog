@@ -71,7 +71,9 @@
   }
 
   &__author {
-    display: flex;
+    &-wrapper {
+      display: flex;
+    }
     &-name {
       font-size: 18px;
     }
@@ -91,6 +93,16 @@
         height: 100%;
         border-radius: 50%;
       }
+    }
+
+    &-delete {
+      border: 1px solid $error-color;
+      color: $error-color;
+    }
+    &-edit {
+      margin-left: 12px;
+      border: 1px solid $success-color;
+      color: $success-color;
     }
   }
 }
