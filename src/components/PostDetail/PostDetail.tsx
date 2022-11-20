@@ -7,6 +7,7 @@ import {
   useGetPostDetailQuery,
   useUnFavoriteMutation,
 } from "../../services";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { format } from "date-fns";
 import { useAppSelector } from "../../hooks";
 import { toast } from "react-toastify";
@@ -148,7 +149,9 @@ const PostDetailUI: FC<{ article: Article }> = ({ article }) => {
             )}
           </div>
         </div>
-        <div className="postdetail__body">{body}</div>
+        <div className="postdetail__body">
+          <ReactMarkdown>{body}</ReactMarkdown>
+        </div>
       </div>
     </div>
   );

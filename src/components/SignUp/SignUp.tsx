@@ -172,7 +172,7 @@ export const SignUp: FC = () => {
       )}
       <Button onClick={onButtonClick} width="100%" text="Create" />
       <p className="signup__quest">
-        Already have an account? <NavLink to={"/signin"}>Sign Ip.</NavLink>
+        Already have an account? <NavLink to={"/signin"}>Sign In.</NavLink>
       </p>
     </form>
   );
